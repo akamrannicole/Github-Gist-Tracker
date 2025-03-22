@@ -1,8 +1,7 @@
 "use client"
 
-import type React from "react"
 import { createContext, useContext, useState } from "react"
-import { toast } from "sonner"
+import { useSonner } from "@/hooks/use-sonner"
 
 type GistFile = {
   filename: string
@@ -28,11 +27,7 @@ type GistsContextType = {
   gists: Gist[]
   loading: boolean
   fetchGists: () => Promise<void>
-  createGist: (data: {
-    description: string
-    public: boolean
-    files: Record<string, { content: string }>
-  }) => Promise<Gist>
+  createGist: (data: { description: string; public: boolean; files: Record<string, { content: string }> }) => Promise<Gist>
   updateGist: (id: string, data: { description: string; files: Record<string, { content: string }> }) => Promise<Gist>
   deleteGist: (id: string) => Promise<void>
   getGist: (id: string) => Promise<Gist>
@@ -45,6 +40,7 @@ const GistsContext = createContext<GistsContextType | undefined>(undefined)
 export function GistsProvider({ children }: { children: React.ReactNode }) {
   const [gists, setGists] = useState<Gist[]>([])
   const [loading, setLoading] = useState(false)
+  const { toast } = useSonner()
 
   const fetchGists = async () => {
     try {
@@ -56,7 +52,10 @@ export function GistsProvider({ children }: { children: React.ReactNode }) {
       const data = await response.json()
       setGists(data)
     } catch (error) {
-      toast.error("Failed to fetch gists")
+      toast("Error", {
+        description: "Failed to fetch gists",
+        type: "error",
+      })
       console.error("Error fetching gists:", error)
     } finally {
       setLoading(false)
@@ -72,7 +71,9 @@ export function GistsProvider({ children }: { children: React.ReactNode }) {
       setLoading(true)
       const response = await fetch("/api/gists", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(data),
       })
       if (!response.ok) {
@@ -80,10 +81,16 @@ export function GistsProvider({ children }: { children: React.ReactNode }) {
       }
       const newGist = await response.json()
       setGists((prev) => [newGist, ...prev])
-      toast.success("Gist created successfully")
+      toast("Success", {
+        description: "Gist created successfully",
+        type: "success",
+      })
       return newGist
     } catch (error) {
-      toast.error("Failed to create gist")
+      toast("Error", {
+        description: "Failed to create gist",
+        type: "error",
+      })
       console.error("Error creating gist:", error)
       throw error
     } finally {
@@ -91,23 +98,36 @@ export function GistsProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const updateGist = async (id: string, data: { description: string; files: Record<string, { content: string }> }) => {
+  const updateGist = async (
+    id: string,
+    data: { description: string; files: Record<string, { content: string }> }
+  ) => {
     try {
       setLoading(true)
       const response = await fetch(`/api/gists/${id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(data),
       })
       if (!response.ok) {
         throw new Error("Failed to update gist")
       }
       const updatedGist = await response.json()
-      setGists((prev) => prev.map((gist) => (gist.id === id ? updatedGist : gist)))
-      toast.success("Gist updated successfully")
+      setGists((prev) =>
+        prev.map((gist) => (gist.id === id ? updatedGist : gist))
+      )
+      toast("Success", {
+        description: "Gist updated successfully",
+        type: "success",
+      })
       return updatedGist
     } catch (error) {
-      toast.error("Failed to update gist")
+      toast("Error", {
+        description: "Failed to update gist",
+        type: "error",
+      })
       console.error("Error updating gist:", error)
       throw error
     } finally {
@@ -118,14 +138,22 @@ export function GistsProvider({ children }: { children: React.ReactNode }) {
   const deleteGist = async (id: string) => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/gists/${id}`, { method: "DELETE" })
+      const response = await fetch(`/api/gists/${id}`, {
+        method: "DELETE",
+      })
       if (!response.ok) {
         throw new Error("Failed to delete gist")
       }
       setGists((prev) => prev.filter((gist) => gist.id !== id))
-      toast.success("Gist deleted successfully")
+      toast("Success", {
+        description: "Gist deleted successfully",
+        type: "success",
+      })
     } catch (error) {
-      toast.error("Failed to delete gist")
+      toast("Error", {
+        description: "Failed to delete gist",
+        type: "error",
+      })
       console.error("Error deleting gist:", error)
       throw error
     } finally {
@@ -140,9 +168,13 @@ export function GistsProvider({ children }: { children: React.ReactNode }) {
       if (!response.ok) {
         throw new Error("Failed to fetch gist")
       }
-      return await response.json()
+      const gist = await response.json()
+      return gist
     } catch (error) {
-      toast.error("Failed to fetch gist")
+      toast("Error", {
+        description: "Failed to fetch gist",
+        type: "error",
+      })
       console.error("Error fetching gist:", error)
       throw error
     } finally {
@@ -153,14 +185,24 @@ export function GistsProvider({ children }: { children: React.ReactNode }) {
   const starGist = async (id: string) => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/gists/${id}/star`, { method: "PUT" })
+      const response = await fetch(`/api/gists/${id}/star`, {
+        method: "PUT",
+      })
       if (!response.ok) {
         throw new Error("Failed to star gist")
       }
-      setGists((prev) => prev.map((gist) => (gist.id === id ? { ...gist, starred: true } : gist)))
-      toast.success("Gist starred successfully")
+      setGists((prev) =>
+        prev.map((gist) => (gist.id === id ? { ...gist, starred: true } : gist))
+      )
+      toast("Success", {
+        description: "Gist starred successfully",
+        type: "success",
+      })
     } catch (error) {
-      toast.error("Failed to star gist")
+      toast("Error", {
+        description: "Failed to star gist",
+        type: "error",
+      })
       console.error("Error starring gist:", error)
       throw error
     } finally {
@@ -171,14 +213,24 @@ export function GistsProvider({ children }: { children: React.ReactNode }) {
   const unstarGist = async (id: string) => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/gists/${id}/star`, { method: "DELETE" })
+      const response = await fetch(`/api/gists/${id}/star`, {
+        method: "DELETE",
+      })
       if (!response.ok) {
         throw new Error("Failed to unstar gist")
       }
-      setGists((prev) => prev.map((gist) => (gist.id === id ? { ...gist, starred: false } : gist)))
-      toast.success("Gist unstarred successfully")
+      setGists((prev) =>
+        prev.map((gist) => (gist.id === id ? { ...gist, starred: false } : gist))
+      )
+      toast("Success", {
+        description: "Gist unstarred successfully",
+        type: "success",
+      })
     } catch (error) {
-      toast.error("Failed to unstar gist")
+      toast("Error", {
+        description: "Failed to unstar gist",
+        type: "error",
+      })
       console.error("Error unstarring gist:", error)
       throw error
     } finally {
@@ -187,7 +239,19 @@ export function GistsProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <GistsContext.Provider value={{ gists, loading, fetchGists, createGist, updateGist, deleteGist, getGist, starGist, unstarGist }}>
+    <GistsContext.Provider
+      value={{
+        gists,
+        loading,
+        fetchGists,
+        createGist,
+        updateGist,
+        deleteGist,
+        getGist,
+        starGist,
+        unstarGist,
+      }}
+    >
       {children}
     </GistsContext.Provider>
   )

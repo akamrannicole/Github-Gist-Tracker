@@ -1,7 +1,6 @@
-import type React from "react"
-import { Inter } from "next/font/google"
+import { Inter } from 'next/font/google'
 import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/toaster"
+import { SonnerProvider } from "@/components/sonner-provider"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import "./globals.css"
@@ -23,10 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
-          <Toaster />
+          <SonnerProvider />
         </ThemeProvider>
       </body>
     </html>
   )
 }
-
