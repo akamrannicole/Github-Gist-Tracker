@@ -95,10 +95,9 @@ export function GistDetail({ id }: GistDetailProps) {
         setFileContents(initialFileContents)
         setError(null)
 
-        // Fetch any missing content
+        
         fetchMissingContents(data.files)
-      } catch (_err) {
-        // Using underscore prefix to indicate intentionally unused variable
+      } catch (_) {
         setError("Failed to load gist")
       } finally {
         setIsLoading(false)
@@ -108,7 +107,7 @@ export function GistDetail({ id }: GistDetailProps) {
     fetchGist()
   }, [id, getGist])
 
-  // Function to fetch content for files that don't have it
+
   const fetchMissingContents = async (files: Record<string, GistFile>) => {
     for (const [filename, file] of Object.entries(files)) {
       // Skip if content is already available
