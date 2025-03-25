@@ -10,7 +10,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useAuth } from "@/hooks/use-auth"
 import { useGists } from "@/hooks/use-gists"
-import { Code, Loader2, MoreHorizontal, Plus, Search, Star } from "lucide-react"
+import { Code, Loader2, MoreHorizontal, Plus, Search, Star } from 'lucide-react'
 import { formatDistanceToNow } from "date-fns"
 import { toast } from "sonner"
 
@@ -105,8 +105,8 @@ export default function GistsPage() {
 
   const handleDeleteGist = async (id: string) => {
     try {
-      // Set a local loading state for this specific operation
-      const localLoadingState = true
+      // Remove the unused variable
+      // const localLoadingState = true;
 
       await deleteGist(id)
 
@@ -120,8 +120,8 @@ export default function GistsPage() {
 
   const handleToggleStar = async (id: string, isStarred: boolean) => {
     try {
-      // Set a local loading state for this specific operation
-      const localLoadingState = true
+      // Remove the unused variable
+      // const localLoadingState = true;
 
       if (isStarred) {
         await unstarGist(id)
@@ -347,4 +347,3 @@ export default function GistsPage() {
     </div>
   )
 }
-
