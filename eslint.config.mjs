@@ -1,26 +1,26 @@
-// Remove these imports from your config:
-import { configs } from "eslint-plugin-jsdoc"; // Not needed
-import { configs as pluginReact } from "eslint-plugin-react"; // Incorrect import
-
-// Corrected config:
 import { defineConfig } from "eslint/config";
-import { configs as tseslint } from "@typescript-eslint/eslint-plugin";
+import jsdoc from "eslint-plugin-jsdoc";
+import react from "eslint-plugin-react";
+import tseslint from "@typescript-eslint/eslint-plugin";
 
 export default defineConfig([
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     languageOptions: {
       globals: {
-        ...globals.browser,
-        ...globals.node
+        browser: true,
+        node: true
       }
     },
     plugins: {
-      "@typescript-eslint": tseslint
+      "@typescript-eslint": tseslint,
+      jsdoc,
+      react
     },
     extends: [
       "plugin:@typescript-eslint/recommended",
-      "js/recommended"
+      "plugin:jsdoc/recommended",
+      "plugin:react/recommended"
     ],
     rules: {
       "@typescript-eslint/no-unused-vars": [
