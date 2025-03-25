@@ -22,7 +22,6 @@ export interface UpdateGistParams {
   files?: Record<string, GistFile | null> 
 }
 
-// Define a type for request body
 export type RequestBody = CreateGistParams | UpdateGistParams | { body: string } | Record<string, unknown> | undefined
 
 export class GitHubApi {
@@ -99,8 +98,7 @@ export class GitHubApi {
     try {
       await this.request(`/gists/${gistId}/star`)
       return true
-    } catch (_error) {
-      // Using underscore prefix to indicate intentionally unused variable
+    } catch (_) {
       return false
     }
   }
