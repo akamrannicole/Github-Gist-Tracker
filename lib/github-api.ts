@@ -22,6 +22,9 @@ export interface UpdateGistParams {
   files?: Record<string, GistFile | null> 
 }
 
+// Define a type for request body
+export type RequestBody = CreateGistParams | UpdateGistParams | { body: string } | undefined
+
 export class GitHubApi {
   private token: string
 
@@ -29,7 +32,7 @@ export class GitHubApi {
     this.token = token
   }
 
-  private async request<T>(endpoint: string, method = "GET", body?: any): Promise<T> {
+  private async request<T>(endpoint: string, method = "GET", body?: RequestBody): Promise<T> {
     const url = `${GITHUB_API_BASE}${endpoint}`
     const headers = getDefaultHeaders(this.token)
 
@@ -96,8 +99,8 @@ export class GitHubApi {
     try {
       await this.request(`/gists/${gistId}/star`)
       return true
-    } catch (error) {
-      
+    } catch (_error) {
+      // Using underscore prefix to indicate intentionally unused variable
       return false
     }
   }
@@ -146,4 +149,3 @@ export class GitHubApi {
 export function createGitHubApi(token: string) {
   return new GitHubApi(token)
 }
-
