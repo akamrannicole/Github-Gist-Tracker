@@ -1,7 +1,5 @@
 # ✨ GitHub Gist Tracker
 
-![GitHub Gist Tracker Banner]()
-
 > A beautiful, intuitive application that helps you manage your GitHub Gists in one place.
 
 ## 🚀 Overview
@@ -20,8 +18,8 @@ GitHub Gist Tracker is a modern web application that allows GitHub users to effo
 - **Secure Login**: Safely access your personal dashboard
 - **Protected Content**: Your Gists and profile information remain private and secure
 
-![Authentication Flow]()
-![Authentication Flow]()
+(https://github.com/user-attachments/assets/3fb09855-a9d2-4af5-9631-4be0669d4257)
+(https://github.com/user-attachments/assets/a63274c6-c7f5-4659-9175-ed58c8e7fd64)
 
 ### 👤 Profile Management
 
@@ -30,7 +28,7 @@ GitHub Gist Tracker is a modern web application that allows GitHub users to effo
 - **GitHub Integration**: Connect with your GitHub account to sync your Gists
 - **Account Control**: Option to delete your account if needed
 
-![Profile Management]()
+(https://github.com/user-attachments/assets/e0b7f346-1191-42e0-b0af-94be16afea3a)
 
 ### 📝 Gist Management
 
@@ -40,8 +38,8 @@ GitHub Gist Tracker is a modern web application that allows GitHub users to effo
 - **Search & Filter**: Quickly find the code snippets you need
 - **Detailed View**: Examine individual Gists with full formatting and syntax highlighting
 
-![Gist Management]()
-![Gist Management]()
+(https://github.com/user-attachments/assets/07108f5e-f141-46b4-bbbe-bb231f42ea29)
+(https://github.com/user-attachments/assets/51c88923-4f7e-4352-b890-baa1de6c0143)
 
 ### ⭐ Bonus Features
 
