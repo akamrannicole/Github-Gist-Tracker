@@ -18,9 +18,36 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Star, Trash2, Pencil, Calendar, User, ExternalLink, Loader2 } from "lucide-react"
+import { Star, Trash2, Pencil, Calendar, User, ExternalLink, Loader2 } from 'lucide-react'
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism"
+
+// Define proper types to replace 'any'
+interface GistFile {
+  filename?: string
+  type?: string
+  language?: string
+  raw_url: string
+  size: number
+  content?: string
+}
+
+interface GistOwner {
+  login: string
+  id: number
+  avatar_url?: string
+}
+
+interface Gist {
+  id: string
+  description: string | null
+  created_at: string
+  updated_at: string
+  owner?: GistOwner
+  files: Record<string, GistFile>
+  html_url: string
+  starred: boolean
+}
 
 interface GistDetailProps {
   id: string
@@ -29,7 +56,7 @@ interface GistDetailProps {
 export function GistDetail({ id }: GistDetailProps) {
   const router = useRouter()
   const { getGist, deleteGist, starGist, unstarGist } = useGists()
-  const [gist, setGist] = useState<any>(null)
+  const [gist, setGist] = useState<Gist | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [fileContents, setFileContents] = useState<
@@ -47,7 +74,7 @@ export function GistDetail({ id }: GistDetailProps) {
         const initialFileContents: Record<string, { content: string; isLoading: boolean; error: string | null }> = {}
 
         // For each file in the gist
-        Object.entries(data.files).forEach(([filename, file]: [string, any]) => {
+        Object.entries(data.files).forEach(([filename, file]: [string, GistFile]) => {
           // If content is already available, use it
           if (file.content) {
             initialFileContents[filename] = {
@@ -70,7 +97,8 @@ export function GistDetail({ id }: GistDetailProps) {
 
         // Fetch any missing content
         fetchMissingContents(data.files)
-      } catch (err) {
+      } catch (_err) {
+        // Using underscore prefix to indicate intentionally unused variable
         setError("Failed to load gist")
       } finally {
         setIsLoading(false)
@@ -81,7 +109,7 @@ export function GistDetail({ id }: GistDetailProps) {
   }, [id, getGist])
 
   // Function to fetch content for files that don't have it
-  const fetchMissingContents = async (files: Record<string, any>) => {
+  const fetchMissingContents = async (files: Record<string, GistFile>) => {
     for (const [filename, file] of Object.entries(files)) {
       // Skip if content is already available
       if (file.content) continue
@@ -132,22 +160,22 @@ export function GistDetail({ id }: GistDetailProps) {
     try {
       await deleteGist(id)
       router.push("/gists")
-    } catch (err) {
-      console.error("Error deleting gist:", err)
+    } catch (error) {
+      console.error("Error deleting gist:", error)
     }
   }
 
   const handleStar = async () => {
     try {
-      if (gist.starred) {
+      if (gist?.starred) {
         await unstarGist(id)
         setGist({ ...gist, starred: false })
-      } else {
+      } else if (gist) {
         await starGist(id)
         setGist({ ...gist, starred: true })
       }
-    } catch (err) {
-      console.error("Error starring/unstarring gist:", err)
+    } catch (error) {
+      console.error("Error starring/unstarring gist:", error)
     }
   }
 
@@ -276,7 +304,7 @@ export function GistDetail({ id }: GistDetailProps) {
             </TabsTrigger>
           ))}
         </TabsList>
-        {Object.entries(gist.files).map(([filename, file]: [string, any]) => (
+        {Object.entries(gist.files).map(([filename, file]: [string, GistFile]) => (
           <TabsContent key={filename} value={filename}>
             <Card>
               <CardHeader>
@@ -324,4 +352,3 @@ export function GistDetail({ id }: GistDetailProps) {
     </div>
   )
 }
-
