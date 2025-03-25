@@ -3,13 +3,13 @@ import { getAuthUser } from "@/lib/auth-utils";
 
 const GITHUB_API_BASE = "https://api.github.com";
 
-export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const user = await getAuthUser();
     if (!user) return NextResponse.json({ error: "Authentication required" }, { status: 401 });
     if (!user.githubToken) return NextResponse.json({ error: "GitHub token not found" }, { status: 400 });
 
-    const { id } = await params;
+    const { id } = params; // ✅ Fixed - params is not a Promise
 
     const response = await fetch(`${GITHUB_API_BASE}/gists/${id}`, {
       headers: {
@@ -31,6 +31,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
         "X-GitHub-Api-Version": "2022-11-28",
       },
     });
+
     gist.starred = starResponse.status === 204;
 
     return NextResponse.json(gist);
@@ -40,13 +41,13 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
   }
 }
 
-export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PATCH(request: Request, { params }: { params: { id: string } }) {
   try {
     const user = await getAuthUser();
     if (!user) return NextResponse.json({ error: "Authentication required" }, { status: 401 });
     if (!user.githubToken) return NextResponse.json({ error: "GitHub token not found" }, { status: 400 });
 
-    const { id } = await params;
+    const { id } = params; // ✅ Fixed - params is not a Promise
     const data = await request.json();
 
     const response = await fetch(`${GITHUB_API_BASE}/gists/${id}`, {
@@ -72,6 +73,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
         "X-GitHub-Api-Version": "2022-11-28",
       },
     });
+
     updatedGist.starred = starResponse.status === 204;
 
     return NextResponse.json(updatedGist);
@@ -81,13 +83,13 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   try {
     const user = await getAuthUser();
     if (!user) return NextResponse.json({ error: "Authentication required" }, { status: 401 });
     if (!user.githubToken) return NextResponse.json({ error: "GitHub token not found" }, { status: 400 });
 
-    const { id } = await params;
+    const { id } = params; // ✅ Fixed - params is not a Promise
 
     const response = await fetch(`${GITHUB_API_BASE}/gists/${id}`, {
       method: "DELETE",
