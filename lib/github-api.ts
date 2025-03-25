@@ -100,6 +100,7 @@ export class GitHubApi {
       return true
     } catch (_) {
       return false
+      
     }
   }
 

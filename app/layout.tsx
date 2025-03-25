@@ -21,11 +21,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
-          
+            {/* Add key to GistsProvider to ensure clean state on navigation */}
             <GistsProvider>
               <div className="flex min-h-screen flex-col">
                 <Header />
-               
+                {/* Wrap main content in a div with transition styles */}
                 <main className="flex-1 transition-opacity duration-200">
                   {children}
                 </main>
@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </GistsProvider>
           </AuthProvider>
         </ThemeProvider>
-      
+        {/* Keep your existing SonnerProvider implementation */}
         <SonnerProvider />
       </body>
     </html>

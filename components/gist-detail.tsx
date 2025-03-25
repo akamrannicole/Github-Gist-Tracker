@@ -94,8 +94,6 @@ export function GistDetail({ id }: GistDetailProps) {
 
         setFileContents(initialFileContents)
         setError(null)
-
-        
         fetchMissingContents(data.files)
       } catch (_) {
         setError("Failed to load gist")

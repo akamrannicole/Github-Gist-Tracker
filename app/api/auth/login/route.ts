@@ -3,9 +3,9 @@ import { compare } from "bcrypt"
 import { connectToDatabase } from "@/lib/mongodb"
 import { User } from "@/models/user"
 import { sign } from "jsonwebtoken"
-import { setAuthCookie } from "@/lib/auth-utils"
+import { serialize } from "cookie"
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<Response> {
   try {
     const { email, password } = await request.json()
 
@@ -27,9 +27,15 @@ export async function POST(request: Request) {
 
     const token = sign({ id: user._id }, process.env.JWT_SECRET || "default_secret", { expiresIn: "7d" })
 
-    await setAuthCookie(token)
+    // Set auth cookie
+    const cookie = serialize("authToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      path: "/",
+    })
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       user: {
         id: user._id,
         name: user.name,
@@ -39,6 +45,9 @@ export async function POST(request: Request) {
         githubToken: user.githubToken,
       },
     })
+
+    response.headers.set("Set-Cookie", cookie)
+    return response
   } catch (error) {
     console.error("Login error:", error)
     return NextResponse.json({ message: "Internal server error" }, { status: 500 })
