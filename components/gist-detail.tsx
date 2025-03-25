@@ -1,4 +1,3 @@
-// File: ./components/gist-detail.tsx
 "use client"
 
 import { useState, useEffect } from "react"

@@ -23,7 +23,7 @@ export interface UpdateGistParams {
 }
 
 // Define a type for request body
-export type RequestBody = CreateGistParams | UpdateGistParams | { body: string } | undefined
+export type RequestBody = CreateGistParams | UpdateGistParams | { body: string } | Record<string, unknown> | undefined
 
 export class GitHubApi {
   private token: string

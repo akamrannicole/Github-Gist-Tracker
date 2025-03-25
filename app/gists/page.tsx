@@ -1,4 +1,3 @@
-// File: ./app/gists/page.tsx
 "use client"
 
 import { useState, useEffect } from "react"
@@ -106,12 +105,7 @@ export default function GistsPage() {
 
   const handleDeleteGist = async (id: string) => {
     try {
-      // Remove the unused variable
-      // const localLoadingState = true;
-
       await deleteGist(id)
-
-      // No need to navigate after deletion, just update the UI
       toast.success("Gist deleted successfully")
     } catch (err) {
       console.error("Error deleting gist:", err)
@@ -121,9 +115,6 @@ export default function GistsPage() {
 
   const handleToggleStar = async (id: string, isStarred: boolean) => {
     try {
-      // Remove the unused variable
-      // const localLoadingState = true;
-
       if (isStarred) {
         await unstarGist(id)
         toast.success("Gist unstarred")
@@ -184,7 +175,7 @@ export default function GistsPage() {
               </div>
               <h3 className="mb-1 text-lg font-medium">No gists found</h3>
               <p className="mb-4 text-sm text-muted-foreground">
-                {searchTerm ? "No gists match your search criteria" : "You haven't created any gists yet"}
+                {searchTerm ? "No gists match your search criteria" : "You haven&apos;t created any gists yet"}
               </p>
               <Link href="/gists/new">
                 <Button>
@@ -271,7 +262,7 @@ export default function GistsPage() {
               </div>
               <h3 className="mb-1 text-lg font-medium">No starred gists</h3>
               <p className="mb-4 text-sm text-muted-foreground">
-                {searchTerm ? "No starred gists match your search criteria" : "You haven't starred any gists yet"}
+                {searchTerm ? "No starred gists match your search criteria" : "You haven&apos;t starred any gists yet"}
               </p>
             </div>
           ) : (
