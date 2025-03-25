@@ -8,7 +8,7 @@ GitHub Gist Tracker is a modern web application that allows GitHub users to effo
 
 **[Live Demo](https://github-gist-tracker.vercel.app)** | **[Report Bug](https://github.com/akamrannicole/github-gist-tracker/issues)** | **[Request Feature](https://github.com/akamrannicole/github-gist-tracker/issues)**
 
-((https://github.com/user-attachments/assets/eec7d7e0-db0d-48b9-8308-c9784ae47c9e))
+![Alt Text]((https://github.com/user-attachments/assets/eec7d7e0-db0d-48b9-8308-c9784ae47c9e))
 
 ## ✨ Features
 
