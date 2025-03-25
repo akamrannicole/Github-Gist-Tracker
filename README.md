@@ -6,7 +6,7 @@
 
 GitHub Gist Tracker is a modern web application that allows GitHub users to effortlessly manage their code snippets (Gists) through an elegant interface. Whether you're a developer looking to organize your code snippets or a team wanting to share useful code fragments, this app provides a seamless experience for creating, viewing, and managing Gists without leaving your workflow.
 
-**[Live Demo](https://github-gist-tracker.vercel.app)** | **[Report Bug](https://github.com/akamrannicole/github-gist-tracker/issues)** | **[Request Feature](https://github.com/akamrannicole/github-gist-tracker/issues)**
+**[Live Demo](https://gist-tracker-r3vsjg1qu-nicoles-projects-9d6db9dc.vercel.app/gists)** | **[Report Bug](https://github.com/akamrannicole/github-gist-tracker/issues)** | **[Request Feature](https://github.com/akamrannicole/github-gist-tracker/issues)**
 
 ![Alt Text](https://github.com/user-attachments/assets/eec7d7e0-db0d-48b9-8308-c9784ae47c9e)
 
