@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ProfileForm } from "@/components/profile-form"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Star } from "lucide-react"
+import { Star } from 'lucide-react'
 
 export function GistsList() {
   const { gists, loading, fetchGists, starGist, unstarGist } = useGists()
@@ -55,7 +55,7 @@ export function GistsList() {
       <Card>
         <CardHeader>
           <CardTitle>No Gists Found</CardTitle>
-          <CardDescription>You don't have any gists yet. Create your first gist to get started.</CardDescription>
+          <CardDescription>You don&apos;t have any gists yet. Create your first gist to get started.</CardDescription>
         </CardHeader>
       </Card>
     )
@@ -105,4 +105,3 @@ export function GistsList() {
     </div>
   )
 }
-
